@@ -1,8 +1,12 @@
 var express       = require("express"),
     app           = express(),
     bodyParser    = require("body-parser"),
-    mongoose      = require("mongoose");
+    mongoose      = require("mongoose")
+    Campground    = require("./models/campground");
+    seedDB        = require("./seeds");
 
+
+seedDB();
 mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser : true });
 
 app.use(bodyParser.urlencoded(
@@ -14,13 +18,6 @@ app.use(bodyParser.urlencoded(
 app.set("view engine", "ejs");
 
 // SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var Campground = mongoose.model("Campground", campgroundSchema);
 
 // Campground.create(
 //     {
@@ -35,17 +32,6 @@ var Campground = mongoose.model("Campground", campgroundSchema);
 //             console.log(campground);
 //         }
 //     });
-
-var campgrounds = [
-    {name: "Salmon Creek", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg"},
-    {name: "Granite Hill", image: "https://farm5.staticflickr.com/4044/4175370953_5488caf554.jpg"},
-    {name: "Mount Everest", image: "https://farm3.staticflickr.com/2924/14465824873_026aa469d7.jpg"},
-    {name: "Salmon Creek", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg"},
-    {name: "Granite Hill", image: "https://farm5.staticflickr.com/4044/4175370953_5488caf554.jpg"},
-    {name: "Mount Everest", image: "https://farm3.staticflickr.com/2924/14465824873_026aa469d7.jpg"},{name: "Salmon Creek", image: "https://farm2.staticflickr.com/1424/1430198323_c26451b047.jpg"},
-    {name: "Granite Hill", image: "https://farm5.staticflickr.com/4044/4175370953_5488caf554.jpg"},
-    {name: "Mount Everest", image: "https://farm3.staticflickr.com/2924/14465824873_026aa469d7.jpg"}
-];
 
 
 app.get('/', function(req, res){
